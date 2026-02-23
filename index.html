@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shalaka 🎀</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#141e30,#243b55);
+color:white;
+text-align:center;
+overflow-x:hidden;
+min-height:100vh;
+}
+
+/* Background collage */
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background:url('collage.jpg') center/cover no-repeat;
+opacity:0.25;
+z-index:-2;
+}
+
+/* HERO IMAGE (always visible) */
+.hero{
+position:relative;
+width:100%;
+max-height:80vh;
+overflow:hidden;
+}
+
+.hero img{
+width:100%;
+height:auto;
+display:block;
+object-fit:cover;
+}
+
+/* Overlay widgets */
+.overlay{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,0.35);
+}
+
+/* Glass box */
+.glass{
+backdrop-filter:blur(15px);
+background:rgba(255,255,255,0.12);
+padding:25px;
+border-radius:20px;
+width:90%;
+max-width:500px;
+box-shadow:0 0 30px rgba(255,105,180,0.4);
+}
+
+.countdown{
+font-size:24px;
+margin:15px 0;
+}
+
+input,button{
+padding:10px;
+border-radius:10px;
+border:none;
+margin-top:10px;
+}
+
+button{
+background:hotpink;
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+/* Secret section */
+#secret{
+display:none;
+margin-top:15px;
+}
+
+/* Popup */
+.popup{
+position:fixed;
+bottom:20px;
+right:20px;
+background:hotpink;
+padding:15px;
+border-radius:12px;
+display:none;
+}
+
+/* Floating hearts */
+.heart{
+position:fixed;
+bottom:-20px;
+font-size:20px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+to{transform:translateY(-120vh);}
+}
+
+#soundBtn{
+position:fixed;
+bottom:20px;
+left:20px;
+background:white;
+color:black;
+padding:8px 15px;
+border-radius:20px;
+display:none;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+<img src="photo1.jpeg">
+
+<div class="overlay">
+<div class="glass">
+
+<h1>Something Special is Coming 🎀</h1>
+
+<div id="countdown" class="countdown"></div>
+
+<input type="password" id="password" placeholder="Enter Secret Password">
+<br>
+<button onclick="unlock()">Unlock 💖</button>
+
+<div id="secret">
+<p>
+You are my favourite notification 💌  
+And maybe my favourite person too.
+</p>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="popup" id="popup">
+Happiest birthday to the prettiest girl I have ever seen.
+From Aditya Marathe (Your Bumble Match)
+</div>
+
+<div id="soundBtn" onclick="playMusic()">Tap to Enable Sound 🎵</div>
+
+<audio id="music" src="music.mp3" loop></audio>
+
+<script>
+
+// Countdown
+const birthday = new Date("March 29, 2026 00:00:00").getTime();
+const countdown = document.getElementById("countdown");
+
+setInterval(function(){
+let now = new Date().getTime();
+let distance = birthday - now;
+
+let d=Math.floor(distance/(1000*60*60*24));
+let h=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+let m=Math.floor((distance%(1000*60*60))/(1000*60));
+
+countdown.innerHTML=d+"d "+h+"h "+m+"m";
+
+if(distance<=0){
+activateBirthdayMode();
+}
+},1000);
+
+// Password
+function unlock(){
+if(document.getElementById("password").value==="bumble"){
+document.getElementById("secret").style.display="block";
+}else{
+alert("Wrong password 😏");
+}
+}
+
+// Music
+const music=document.getElementById("music");
+music.play().catch(()=>{
+document.getElementById("soundBtn").style.display="block";
+});
+
+function playMusic(){
+music.play();
+document.getElementById("soundBtn").style.display="none";
+}
+
+// Birthday Mode
+function activateBirthdayMode(){
+
+const popup=document.getElementById("popup");
+
+setInterval(function(){
+popup.style.display="block";
+setTimeout(()=>popup.style.display="none",5000);
+},15000);
+
+setInterval(function(){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💖";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(4+Math.random()*4)+"s";
+document.body.appendChild(heart);
+},400);
+
+}
+</script>
+
+</body>
+</html>
